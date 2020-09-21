@@ -12,7 +12,7 @@ services:
       - mysql
   mysql:
     image: flask-db
-    build: ./db
+    build: ./database
     environment:
       - SECRET_KEY=${DB_PASSWORD}
       - MYSQL_DATABASE=flask-db
