@@ -2,10 +2,14 @@ CREATE DATABASE testdb;
 CREATE DATABASE users;
 USE users;
 
-DROP TABLE IF NOT EXISTS `users`;
+DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `userName` VARCHAR(30) NOT NULL
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES ('Bob'),('Jay'),('Matt'),('Ferg'),('Mo');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
