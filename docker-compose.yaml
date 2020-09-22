@@ -1,11 +1,10 @@
 version: '3.7'
 services:
   mysql:
-    image: flask-db
+    image: users
     build: ./database
     environment:
       - SECRET_KEY=${DB_PASSWORD}
-      - MYSQL_DATABASE=flask-db
       - DATABASE_URI=${DATABASE_URI}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
   frontend:
@@ -18,7 +17,6 @@ services:
     build: ./backend
     environment:
       - SECRET_KEY=${DB_PASSWORD}
-      - MYSQL_DATABASE=flask-db
       - DATABASE_URI=${DATABASE_URI}
     depends_on:
       - mysql
