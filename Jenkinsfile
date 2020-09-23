@@ -30,9 +30,8 @@ pipeline{
                   then
                     echo exists
                   else 
-                     cd git clone -b practice https://github.com/JudithEdh/sfia2 
-                     pwd
-                     cd FILE
+                     git clone -b practice https://github.com/JudithEdh/sfia2 
+                     pwd                   
                   fi 
                   
                   '''
@@ -53,8 +52,7 @@ pipeline{
               }
             stage('Deploy the application'){
                 steps{
-                  sh '''
-                  cd /home/jenkins/.jenkins/workspace/web-app/sfia2                 
+                  sh '''                
                   sudo docker-compose pull && sudo -E MYSQL_ROOT_PASSWORD=${DB_PASSWORD} DB_PASSWORD=${DB_PASSWORD} DATABASE_URI=${DATABASE_URI} SECRET_KEY=${SECRET_KEY} docker-compose up -d 
                   '''  
                 }
