@@ -50,10 +50,6 @@ pipeline{
             stage('Deploy the application'){
                 steps{
                   sh '''
-                  export SECRET_KEY=password
-                  export DATABASE_URI='mysql+pymysql://root:password@mysql:3306/users'
-                  export DB_PASSWORD=password
-                  export MYSQL_ROOT_PASSWORD=password
                   cd /home/jenkins/.jenkins/workspace/web-app/sfia2                 
                   sudo docker-compose pull && sudo -E MYSQL_ROOT_PASSWORD=${DB_PASSWORD} DB_PASSWORD=${DB_PASSWORD} DATABASE_URI=${DATABASE_URI} SECRET_KEY=${SECRET_KEY} docker-compose up -d 
                   '''  
