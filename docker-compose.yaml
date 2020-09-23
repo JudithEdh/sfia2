@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  mysql:
+    image: users
+    build: ./database
+    environment:
+      - SECRET_KEY=${DB_PASSWORD}
+      - DATABASE_URI=${DATABASE_URI}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+  frontend:
+    image: frontend
+    build: ./frontend
+    depends_on:
+      - backend
+  backend:
+    image: backend
+    build: ./backend
+    environment:
+      - SECRET_KEY=${DB_PASSWORD}
+      - DATABASE_URI=${DATABASE_URI}
+    depends_on:
+      - mysql
+  nginx:
+    image: nginx
+    ports:
+    - target: 80
+      published: 80
+    volumes:
+    - type: bind
+      source: ./nginx/nginx.conf
+      target: /etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+
+
