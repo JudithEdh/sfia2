@@ -28,8 +28,9 @@ pipeline{
                   then
                     echo exists
                   else 
-                    git clone -b practice https://github.com/JudithEdh/sfia2 
+                     cd $DIRECTORY && git clone -b practice https://github.com/JudithEdh/sfia2 
                   fi 
+                  
                   '''
                 }
             }
