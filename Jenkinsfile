@@ -13,6 +13,7 @@ pipeline{
                   else 
                     mkdir $DIRECTORY
                     cd $DIRECTORY
+                    pwd
                   fi          
                   '''
                 }
@@ -20,15 +21,18 @@ pipeline{
             stage('Clone Repo if it does not exist'){
                 steps{
                   sh '''
+                  pwd
                   DIRECTORY=~/web-app  
-                  FILE=/home/jenkins/.jenkins/workspace/web-app/sfia2
+                  FILE=~/sfia2
                   sudo apt update
                   sudo apt-get install git                
                   if [ -d "$FILE" ]
                   then
                     echo exists
                   else 
-                     cd $DIRECTORY && git clone -b practice https://github.com/JudithEdh/sfia2 
+                     cd git clone -b practice https://github.com/JudithEdh/sfia2 
+                     pwd
+                     cd FILE
                   fi 
                   
                   '''
