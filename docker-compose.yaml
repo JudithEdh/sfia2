@@ -18,6 +18,7 @@ services:
     environment:
       - SECRET_KEY=${DB_PASSWORD}
       - DATABASE_URI=${DATABASE_URI}
+      - MYSQL_DATABASE=users
     depends_on:
       - mysql
   nginx:
