@@ -18,7 +18,6 @@ services:
     environment:
       - SECRET_KEY=${DB_PASSWORD}
       - DATABASE_URI=${DATABASE_URI}
-      - MYSQL_DATABASE=users
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     depends_on:
       - mysql
