@@ -48,7 +48,9 @@ pipeline{
               }
             stage('Deploy the application'){
                 steps{
-                  sh '''   
+                  sh '''
+                  sudo docker-compose down --rmi all
+                  sudo docker system prune -a                
                   export SECRET_KEY
                   export DATABASE_URI
                   export DB_PASSWORD
