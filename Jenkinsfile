@@ -30,6 +30,7 @@ pipeline{
                     git clone -b practice https://github.com/JudithEdh/sfia2  
                   fi 
                   cd $FILE
+                  git pull
                   '''
                 }
             }
