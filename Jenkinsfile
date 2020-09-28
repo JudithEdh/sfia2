@@ -1,10 +1,11 @@
 pipeline{
         agent any
         stages{
-            stage('Make Directory'){
+            stage('Run'){
                 steps{
-                  sh '''
-                  #! /bin/bash
+                 sshagent(['cb38f8ec-2d0a-4696-bd26-8e23756d0756']) {
+                   sh '''
+                   ssh ubuntu@18.134.12.28
                   DIRECTORY=~/web-app  
                   rm -rf DIRECTORY
                   if [ -d ~/web-app ]
@@ -13,30 +14,17 @@ pipeline{
                   else 
                     mkdir $DIRECTORY
                     cd $DIRECTORY
-                  fi          
-                  '''
-                }
-            }        
-            stage('Clone Repo if it does not exist'){
-                steps{
-                  sh '''
-                  DIRECTORY=~/jenkins-pipeline-exercise  
+                  fi
                   FILE=/home/jenkins/.jenkins/workspace/web-app/sfia2
                   sudo apt-get install git                
                   if [ -d "$FILE" ]
                   then
                     echo exists
                   else 
-                    git clone -b practice https://github.com/JudithEdh/sfia2  
+                    git clone -b ssh https://github.com/JudithEdh/sfia2  
                   fi 
                   cd $FILE
                   git pull
-                  '''
-                }
-            }
-            stage('Install Docker and Docker-Compose'){
-                steps{
-                  sh '''
                   sudo apt update
                   curl https://get.docker.com | sudo bash
                   sudo usermod -aG docker $(whoami)
@@ -44,12 +32,6 @@ pipeline{
                   version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
                   sudo curl -L "https://github.com/docker/compose/releases/download/${version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
                   sudo chmod +x /usr/local/bin/docker-compose
-                  '''
-                }
-              }
-            stage('Deploy the application'){
-                steps{
-                  sh ''' 
                   pwd
                   export SECRET_KEY
                   export DATABASE_URI
@@ -61,5 +43,8 @@ pipeline{
                   '''  
                 }
             }
+            }
+        }
+}
         }    
 }
