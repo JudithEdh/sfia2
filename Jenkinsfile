@@ -1,5 +1,12 @@
 pipeline{
         agent any
+            environment {
+                    SECRET_KEY    = credentials('SECRET_KEY')
+                    DATABASE_URI = credentials('DATABASE_URI')
+                    DB_PASSWORD = credentials('DB_PASSWORD')
+                    MYSQL_ROOT_PASSWORD = credentials('MYSQL_ROOT_PASSWORD')
+        
+                                }
         stages{
             stage('Run'){
                 steps{
