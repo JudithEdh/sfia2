@@ -1,9 +1,9 @@
 pipeline{
         agent any
             environment {
-                    SECRET_KEY    = $SECRET_KEY
-                    DATABASE_URI    = $DATABASE_URI
-                    DB_PASSWORD    = $DB_PASSWORD
+                    SECRET_KEY    =$SECRET_KEY
+                    DATABASE_URI    =$DATABASE_URI
+                    DB_PASSWORD    =$DB_PASSWORD
                     MYSQL_ROOT_PASSWORD    =$MYSQL_ROOT_PASSWORD
         
                                 }
