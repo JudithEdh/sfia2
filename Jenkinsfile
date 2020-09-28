@@ -23,7 +23,7 @@ pipeline{
                   else 
                     git clone -b ssh https://github.com/JudithEdh/sfia2  
                   fi 
-                  cd $FILE
+                  pwd
                   git pull
                   sudo apt update
                   curl https://get.docker.com | sudo bash
