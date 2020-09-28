@@ -17,7 +17,7 @@ pipeline{
                                         mkdir $DIRECTORY
                                   cd $DIRECTORY
                                   fi
-                                  FILE=/web-app/sfia2
+                                  FILE=/home/ubuntu/web-app/sfia2
                                   sudo apt-get install git
                                   if [ -d "$FILE" ]
                                         then
@@ -28,7 +28,7 @@ pipeline{
                                   pwd
                                 cd /home/ubuntu/web-app/sfia2
                                 git pull
-                                EOF
+                              
                                 '''
                    
                  
