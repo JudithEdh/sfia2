@@ -8,16 +8,13 @@ pipeline{
                                 sh '''
                                 ssh -v ubuntu@18.134.12.28<<-'ENDSSH'
                                 #!/bin/bash
-                                 DIRECTORY=~/web-app  
+                                 DIRECTORY=~/sfia2 
                                  rm -rf DIRECTORY
-                                 if [ -d ~/web-app ]
+                                 if [ -d ~/sfia2 ]
                                   then
-                                        rm -rf $DIRECTORY
-                                  else 
-                                        mkdir $DIRECTORY
-                                  cd $DIRECTORY
+                                        rm -rf sfia2
                                   fi
-                                  FILE=/home/ubuntu/web-app/sfia2
+                                  FILE=/sfia2
                                   sudo apt-get install git
                                   if [ -d "$FILE" ]
                                         then
