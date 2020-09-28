@@ -22,8 +22,8 @@ pipeline{
                                         else 
                                          git clone -b ssh https://github.com/JudithEdh/sfia2  
                                   fi 
-                                  pwd
-                                cd /sfia2
+                                pwd
+                                cd ~/sfia2
                                 git pull
                               
                                 '''
