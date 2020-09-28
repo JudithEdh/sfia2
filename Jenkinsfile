@@ -1,12 +1,5 @@
 pipeline{
         agent any
-            environment {
-                   SECRET_KEY='password'
-                   DATABASE_URI='mysql+pymysql://root:password@mysql:3306/users'
-                   DB_PASSWORD='password'
-                   MYSQL_ROOT_PASSWORD='password'
-        
-                                }
         stages{
             stage('Run'){
                 steps{
@@ -45,7 +38,7 @@ pipeline{
                                 export DB_PASSWORD
                                 export MYSQL_ROOT_PASSWORD
                                 sudo docker-compose down --rmi all
-                                sudo -E MYSQL_ROOT_PASSWORD=${DB_PASSWORD} DB_PASSWORD=${DB_PASSWORD} DATABASE_URI=${DATABASE_URI} SECRET_KEY=${SECRET_KEY} docker-compose pull && sudo -E MYSQL_ROOT_PASSWORD=${DB_PASSWORD} DB_PASSWORD=${DB_PASSWORD} DATABASE_URI=${DATABASE_URI} SECRET_KEY=${SECRET_KEY} docker-compose up -d --build
+                                sudo -E MYSQL_ROOT_PASSWORD=passord DB_PASSWORD=password DATABASE_URI='mysql+pymysql://root:password@mysql:3306/users' SECRET_KEY=password docker-compose up -d --build
                                 sudo docker-compose logs
                                 '''  
                    
