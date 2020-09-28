@@ -1,10 +1,10 @@
 pipeline{
         agent any
             environment {
-                    SECRET_KEY    = credentials('SECRET_KEY')
-                    DATABASE_URI    = credentials('DATABASE_URI')
-                    DB_PASSWORD    = credentials('DB_PASSWORD')
-                    MYSQL_ROOT_PASSWORD    = credentials('MYSQL_ROOT_PASSWORD')
+                    SECRET_KEY    = $SECRET_KEY
+                    DATABASE_URI    = $DATABASE_URI
+                    DB_PASSWORD    = $DB_PASSWORD
+                    MYSQL_ROOT_PASSWORD    =$MYSQL_ROOT_PASSWORD
         
                                 }
         stages{
