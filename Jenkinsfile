@@ -23,7 +23,7 @@ pipeline{
                                          git clone -b ssh https://github.com/JudithEdh/sfia2  
                                   fi 
                                   pwd
-                                cd /home/ubuntu/web-app/sfia2
+                                cd /sfia2
                                 git pull
                               
                                 '''
