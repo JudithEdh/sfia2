@@ -17,7 +17,7 @@ pipeline{
                                         mkdir $DIRECTORY
                                   cd $DIRECTORY
                                   fi
-                                  FILE=/home/ubuntu/web-app/sfia2
+                                  FILE=/web-app/sfia2
                                   sudo apt-get install git
                                   if [ -d "$FILE" ]
                                         then
