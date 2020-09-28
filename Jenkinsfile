@@ -1,10 +1,10 @@
 pipeline{
         agent any
             environment {
-                    SECRET_KEY    =$SECRET_KEY
-                    DATABASE_URI    =$DATABASE_URI
-                    DB_PASSWORD    =$DB_PASSWORD
-                    MYSQL_ROOT_PASSWORD    =$MYSQL_ROOT_PASSWORD
+                   SECRET_KEY='password'
+                   DATABASE_URI='mysql+pymysql://root:password@mysql:3306/users'
+                   DB_PASSWORD='password'
+                   MYSQL_ROOT_PASSWORD='password'
         
                                 }
         stages{
