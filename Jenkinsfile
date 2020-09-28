@@ -17,7 +17,7 @@ pipeline{
                                         mkdir $DIRECTORY
                                   cd $DIRECTORY
                                   fi
-                                  FILE=/home/jenkins/.jenkins/workspace/web-app/sfia2
+                                  FILE=/home/ubuntu/web-app/sfia2
                                   sudo apt-get install git
                                   if [ -d "$FILE" ]
                                         then
@@ -26,7 +26,7 @@ pipeline{
                                          git clone -b ssh https://github.com/JudithEdh/sfia2  
                                   fi 
                                   pwd
-                                cd /home/jenkins/.jenkins/workspace/web-app/sfia2
+                                cd /home/ubuntu/web-app/sfia2
                                 git pull
                                 EOF
                                 '''
