@@ -10,7 +10,9 @@ pipeline{
                                           file(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'MYSQL_ROOT_PASSWORD'), ]) {
                                 sh '''
                                 pwd
-                                cp \$key_new ~/key_new.pem
+                                rm -rf ~/ssh
+                                cd ~/ssh
+                                cp \$key_new ~/ssh/key_new.pem
                                 chmod 400 key_new.pem
                                 pwd
                                 ls
