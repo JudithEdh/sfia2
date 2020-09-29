@@ -11,7 +11,6 @@ pipeline{
                                 sh '''
                                 pwd
                                 rm -rf /home/jenkins/.jenkins/workspace/web-app/ssh
-                                cd /ssh
                                 pwd
                                 cp \$key_new /home/jenkins/.jenkins/workspace/web-app/ssh
                                 chmod 400 key_new.pem
