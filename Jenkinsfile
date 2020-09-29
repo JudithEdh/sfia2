@@ -3,14 +3,14 @@ pipeline{
         stages{
             stage('Run'){
                 steps{
-                          withCredentials([file(credentialsId: 'key_new.pem', variable: 'KEY'), 
+                          withCredentials([file(credentialsId: 'key_new.pem', variable: 'key_new.pem'), 
                                            file(credentialsId: 'SECRET_KEY', variable: 'SECRET_KEY'), 
                                            file(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                            file(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
                                           file(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'MYSQL_ROOT_PASSWORD'), ]) {
-                                sh 'ssh -o StrictHostKeyChecking=no -i KEY ubuntu@3.9.188.81 uptime'
+                                sh 'ssh -o StrictHostKeyChecking=no -i key_new.pem ubuntu@3.9.188.81 uptime'
                                 sh '''
-                                ssh -v -i KEY ubuntu@3.9.188.81<<-'ENDSSH'
+                                ssh -v -i key_new.pem ubuntu@3.9.188.81<<-'ENDSSH'
                                 #!/bin/bash
                                  DIRECTORY=~/sfia2 
                                  rm -rf DIRECTORY
