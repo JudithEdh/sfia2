@@ -7,7 +7,7 @@ pipeline{
                           withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                            string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD')]) {
                                 sh '''
-                                 ssh -o StrictHostKeyChecking=no -v -t ubuntu@18.130.103.218 << EOF 
+                                 ssh -o StrictHostKeyChecking=no -v ubuntu@18.130.103.218 << EOF 
                                  sudo apt update
                                  udo apt-get install git
                                  curl https://get.docker.com | sudo bash
