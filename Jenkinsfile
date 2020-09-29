@@ -3,10 +3,14 @@ pipeline{
         stages{
             stage('Run'){
                 steps{
-                 sshagent(['ubuntu']) {
-                         sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.9.188.81 uptime'
+                          withCredentials([file(credentialsId: 'key_new.pem', variable: 'KEY'), 
+                                           file(credentialsId: 'SECRET_KEY', variable: 'SECRET_KEY'), 
+                                           file(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
+                                           file(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
+                                          file(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'MYSQL_ROOT_PASSWORD'), ]) {
+                                sh 'ssh -o StrictHostKeyChecking=no -i KEY ubuntu@3.9.188.81 uptime'
                                 sh '''
-                                ssh -v ubuntu@3.9.188.81<<-'ENDSSH'
+                                ssh -v -i KEY ubuntu@3.9.188.81<<-'ENDSSH'
                                 #!/bin/bash
                                  DIRECTORY=~/sfia2 
                                  rm -rf DIRECTORY
@@ -38,7 +42,7 @@ pipeline{
                                 export DB_PASSWORD
                                 export MYSQL_ROOT_PASSWORD
                                 sudo docker-compose down --rmi all
-                                sudo -E MYSQL_ROOT_PASSWORD=passord DB_PASSWORD=password DATABASE_URI='mysql+pymysql://root:password@mysql:3306/users' SECRET_KEY=password docker-compose up -d --build
+                                sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY docker-compose up -d --build
                                 sudo docker-compose logs
                                 '''  
                    
@@ -49,6 +53,6 @@ pipeline{
             }
           }
         }
-   }
+   
           
 
