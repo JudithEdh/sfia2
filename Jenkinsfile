@@ -8,14 +8,7 @@ pipeline{
                                            string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD')]) {
                                 sh '''
                                  ssh -o StrictHostKeyChecking=no -v ubuntu@18.130.103.218 << EOF 
-                                 sudo apt update
-                                 sudo apt-get install git
-                                 curl https://get.docker.com | sudo bash
-                                 sudo usermod -aG docker $(whoami)
-                                 sudo apt install -y curl jq
-                                 version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
-                                 sudo curl -L "https://github.com/docker/compose/releases/download/${version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                                 sudo chmod +x /usr/local/bin/docker-compose
+                                 
                                  rm -rf ~/sfia2 
                                  if [ -d ~/sfia2 ]
                                   then
