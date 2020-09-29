@@ -11,7 +11,10 @@ pipeline{
                                 sh '''
                                 pwd
                                 cp \$key_new ~/key_new.pem
-                                ssh -o StrictHostKeyChecking=no -i key_new.pem ubuntu@3.9.188.81 uptime
+                                chmod 400 key_new.pem
+                                pwd
+                                ls
+                                ssh -o StrictHostKeyChecking=no -i "key_new.pem" ubuntu@3.9.188.81 uptime
                                 
                                 ssh -v -i key_new.pem ubuntu@3.9.188.81<<-'ENDSSH'
                                 #!/bin/bash
