@@ -7,7 +7,7 @@ pipeline{
                           withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                            string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD')]) {
                                 sh '''
-                                 ssh -o StrictHostKeyChecking=no -v -t ubuntu@18.133.183.22 "                                
+                                 ssh -o StrictHostKeyChecking=no -v -t ubuntu@18.133.183.22 << EOF                                
                                  DIRECTORY=~/sfia2 
                                  rm -rf DIRECTORY
                                  if [ -d ~/sfia2 ]
@@ -30,7 +30,7 @@ pipeline{
                                 sudo docker-compose down --rmi all
                                 sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$DB_PASSWORD docker-compose up -d --build
                                 sudo docker-compose logs
-                                "
+                                EOF
                                 '''  
                    
                  
