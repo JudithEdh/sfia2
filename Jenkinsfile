@@ -3,12 +3,12 @@ pipeline{
         stages{
             stage('Run'){
                 steps{
-                          withCredentials([file(credentialsId: 'key_new.pem', variable: 'key_new.pem'), 
+                          withCredentials([file(credentialsId: 'key_new.pem', variable: 'key_new'), 
                                            file(credentialsId: 'SECRET_KEY', variable: 'SECRET_KEY'), 
                                            file(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                            file(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
                                           file(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'MYSQL_ROOT_PASSWORD'), ]) {
-                                sh "cp \$key_new.pem /src/main/resources/key_new.pem"
+                                sh "cp \$key_new /src/main/resources/key_new.pem"
                                 sh 'ssh -o StrictHostKeyChecking=no -i key_new.pem ubuntu@3.9.188.81 uptime'
                                 sh '''
                                 ssh -v -i key_new.pem ubuntu@3.9.188.81<<-'ENDSSH'
@@ -45,6 +45,7 @@ pipeline{
                                 sudo docker-compose down --rmi all
                                 sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY docker-compose up -d --build
                                 sudo docker-compose logs
+                                exit
                                 '''  
                    
                  
