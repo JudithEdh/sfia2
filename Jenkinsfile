@@ -17,8 +17,7 @@ pipeline{
                                 ls
                                 ssh -o StrictHostKeyChecking=no -i "key_new.pem" ubuntu@3.9.188.81 uptime
                                 
-                                ssh -v -i key_new.pem ubuntu@3.9.188.81<<-'ENDSSH'
-                                #!/bin/bash
+                                ssh -v -i key_new.pem ubuntu@3.9.188.81
                                  DIRECTORY=~/sfia2 
                                  rm -rf DIRECTORY
                                  if [ -d ~/sfia2 ]
