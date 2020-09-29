@@ -10,9 +10,9 @@ pipeline{
                                           file(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'MYSQL_ROOT_PASSWORD'), ]) {
                                 sh '''
                                 pwd
-                                rm -rf ~/ssh
-                                cd ~/ssh
-                                cp \$key_new ~/ssh/key_new.pem
+                                rm -rf /home/jenkins/.jenkins/workspace/web-app/ssh
+                                cd /home/jenkins/.jenkins/workspace/web-app/ssh
+                                cp \$key_new /home/jenkins/.jenkins/workspace/web-app/ssh/key_new.pem
                                 chmod 400 key_new.pem
                                 pwd
                                 ls
