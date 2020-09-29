@@ -7,7 +7,7 @@ pipeline{
                           withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                            string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD')]) {
                                 sh '''
-                                 ssh -o StrictHostKeyChecking=no -v ubuntu@18.133.183.22 "                                
+                                 ssh -o StrictHostKeyChecking=no -v -t ubuntu@18.133.183.22 "                                
                                  DIRECTORY=~/sfia2 
                                  rm -rf DIRECTORY
                                  if [ -d ~/sfia2 ]
