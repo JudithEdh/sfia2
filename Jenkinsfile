@@ -9,7 +9,7 @@ pipeline{
                                 sh '''
                                  ssh -o StrictHostKeyChecking=no -v ubuntu@18.130.103.218 << EOF 
                                  sudo apt update
-                                 udo apt-get install git
+                                 sudo apt-get install git
                                  curl https://get.docker.com | sudo bash
                                  sudo usermod -aG docker $(whoami)
                                  sudo apt install -y curl jq
