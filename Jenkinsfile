@@ -8,10 +8,11 @@ pipeline{
                                            file(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                            file(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
                                           file(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'MYSQL_ROOT_PASSWORD'), ]) {
-                                sh "pwd"
-                                sh "cp \$key_new ~/key_new.pem"
-                                sh 'ssh -o StrictHostKeyChecking=no -i key_new.pem ubuntu@3.9.188.81 uptime'
                                 sh '''
+                                pwd
+                                cp \$key_new ~/key_new.pem
+                                ssh -o StrictHostKeyChecking=no -i key_new.pem ubuntu@3.9.188.81 uptime
+                                
                                 ssh -v -i key_new.pem ubuntu@3.9.188.81<<-'ENDSSH'
                                 #!/bin/bash
                                  DIRECTORY=~/sfia2 
