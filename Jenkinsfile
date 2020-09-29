@@ -4,9 +4,8 @@ pipeline{
             stage('Run'){
                 steps{
                         sshagent(['ubuntu']) {
-                          withCredentials([string(credentialsId: 'SECRET_KEY', variable: 'SECRET_KEY'), 
-                                           string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
-                                           string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'), ]) {
+                          withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
+                                           string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD')]) {
                                 sh 'ssh -o StrictHostKeyChecking=no ubuntu@18.133.183.22 uptime'
                                 sh '''
                                  ssh -v ubuntu@18.133.183.22 "                                
