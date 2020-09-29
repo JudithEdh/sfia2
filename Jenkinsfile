@@ -3,22 +3,13 @@ pipeline{
         stages{
             stage('Run'){
                 steps{
-                          withCredentials([file(credentialsId: 'key_new', variable: 'key_new'), 
-                                           file(credentialsId: 'SECRET_KEY', variable: 'SECRET_KEY'), 
-                                           file(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
-                                           file(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
-                                          file(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'MYSQL_ROOT_PASSWORD'), ]) {
+                        sshagent(['ubuntu']) {
+                          withCredentials([string(credentialsId: 'SECRET_KEY', variable: 'SECRET_KEY'), 
+                                           string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
+                                           string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'), ]) {
+                                sh 'ssh -o StrictHostKeyChecking=no ubuntu@18.133.183.22 uptime'
                                 sh '''
-                                cd
-                                rm -rf ~/key_new.pem
-                                cp \$key_new ~/key_new.pem
-                                pwd
-                                chmod 400 key_new.pem
-                                pwd
-                                ls
-                                ssh -o StrictHostKeyChecking=no -i "key_new.pem" ubuntu@3.9.188.81 uptime
-                                
-                                ssh -v -i key_new.pem ubuntu@3.9.188.81
+                                 ssh -v ubuntu@18.133.183.22 "                                
                                  DIRECTORY=~/sfia2 
                                  rm -rf DIRECTORY
                                  if [ -d ~/sfia2 ]
@@ -45,14 +36,14 @@ pipeline{
                                 sudo chmod +x /usr/local/bin/docker-compose
                                 pwd
                                 sudo docker-compose down --rmi all
-                                sudo -E MYSQL_ROOT_PASSWORD=${DB_PASSWORD} DB_PASSWORD=${DB_PASSWORD} DATABASE_URI=${DATABASE_URI} SECRET_KEY=${SECRET_KEY} docker-compose up -d --build
+                                sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$DB_PASSWORD docker-compose up -d --build
                                 sudo docker-compose logs
-                                exit
+                                "
                                 '''  
                    
                  
                           }
-
+                        }
                 }
             }
           }
