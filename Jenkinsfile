@@ -3,7 +3,7 @@ pipeline{
         stages{
             stage('Run'){
                 steps{
-                          withCredentials([file(credentialsId: 'key_new.pem', variable: 'key_new'), 
+                          withCredentials([file(credentialsId: 'key_new', variable: 'key_new'), 
                                            file(credentialsId: 'SECRET_KEY', variable: 'SECRET_KEY'), 
                                            file(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                            file(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
