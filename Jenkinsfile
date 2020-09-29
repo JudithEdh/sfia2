@@ -24,7 +24,7 @@ pipeline{
                                          git clone -b ssh https://github.com/JudithEdh/sfia2  
                                   fi 
                                 pwd
-                                cd ~/sfia2
+                                cd sfia2
                                 git pull
                                 sudo apt update
                                 curl https://get.docker.com | sudo bash
