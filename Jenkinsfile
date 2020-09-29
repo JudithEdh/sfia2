@@ -15,15 +15,9 @@ pipeline{
                                   then
                                         rm -rf sfia2
                                   fi
-                                  FILE=/sfia2
                                   sudo apt-get install git
-                                  if [ -d "$FILE" ]
-                                        then
-                                         echo exists
-                                        else 
-                                         git clone -b ssh https://github.com/JudithEdh/sfia2  
-                                  fi 
-                                pwd
+                                  git clone -b ssh https://github.com/JudithEdh/sfia2  
+                                  pwd
                                 cd sfia2
                                 git pull
                                 sudo apt update
