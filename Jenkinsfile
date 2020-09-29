@@ -4,9 +4,9 @@ pipeline{
             stage('Run'){
                 steps{
                  sshagent(['ubuntu']) {
-                         sh 'ssh -o StrictHostKeyChecking=no ubuntu@18.134.12.28 uptime'
+                         sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.9.188.81 uptime'
                                 sh '''
-                                ssh -v ubuntu@18.134.12.28<<-'ENDSSH'
+                                ssh -v ubuntu@3.9.188.81<<-'ENDSSH'
                                 #!/bin/bash
                                  DIRECTORY=~/sfia2 
                                  rm -rf DIRECTORY
