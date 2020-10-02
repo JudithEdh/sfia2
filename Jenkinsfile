@@ -20,7 +20,7 @@ pipeline{
                                   cd sfia2
                                   git pull
                                   pwd
-                                  
+                                  sudo docker-compose down --rmi all
                                   sudo docker-compose logs
                                   '''  
 
