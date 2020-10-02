@@ -13,6 +13,7 @@ services:
       - DATABASE_URI=${DATABASE_URI}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - TEST_DATABASE_URI=${TEST_DATABASE_URI}
+      - DB_PASSWORD=${DB_PASSWORD}
   nginx:
     image: nginx
     ports:
