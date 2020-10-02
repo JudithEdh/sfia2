@@ -21,7 +21,7 @@ pipeline{
                                   git pull
                                   pwd
                                   sudo docker-compose down --rmi all
-                                  sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI docker-compose up -d --build
+                                  sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$DATABASE_URI docker-compose up -d --build
                                   sudo docker-compose logs
                                   '''  
 
