@@ -20,7 +20,7 @@ pipeline{
                                   cd sfia2
                                   git pull
                                   pwd
-                                  sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI TEST_DATABASE_URI=$TEST_DATABASE_URI SECRET_KEY=$DB_PASSWORD docker-compose up -d --build
+                                  
                                   sudo docker-compose logs
                                   '''  
 
