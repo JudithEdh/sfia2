@@ -1,7 +1,7 @@
 pipeline{
         agent any
         stages{
-            stage('Run'){
+            stage('Run & Test'){
                 steps{
                         sshagent(['ubuntu']) {
                          withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
@@ -22,6 +22,8 @@ pipeline{
                                   pwd
                                   sudo docker-compose down --rmi all
                                   sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI docker-compose up -d --build
+                                  sudo docker exec -it sfia2_backend_1 pytest --cov application 
+                                  sudo docker exec -it sfia2_frontend_1 pytest --cov application 
                                   sudo docker-compose logs
                                   '''  
 
@@ -30,5 +32,7 @@ pipeline{
                         }
                 }
             }
+                
+                
           }
         }
