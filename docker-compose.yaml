@@ -4,7 +4,7 @@ services:
     image: judithed/sfia2-frontend:${app_version}
     build: ./frontend
     depends_on:
-      - sfia2-backend
+      - backend
   backend:
     image: judithed/sfia2-backend:${app_version}
     build: ./backend
@@ -24,6 +24,6 @@ services:
       source: ./nginx/nginx.conf
       target: /etc/nginx/nginx.conf
     depends_on:
-      - sfia2-frontend
+      - frontend
 
 
