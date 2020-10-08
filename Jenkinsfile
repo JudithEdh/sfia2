@@ -36,7 +36,17 @@ pipeline{
                                  
                                  
                                  sh '''
-                                 DOCKER_HOST="ssh://ubuntu@35.177.140.168" docker-compose pull && docker-compose up -d
+                                  ssh -o StrictHostKeyChecking=no -tt ubuntu@18.134.10.201 << EOF 
+                                  cd sfia2
+                                  git pull
+                                  pwd
+                                  sudo docker-compose down --rmi all
+                                  sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI docker-compose pull && docker-compose up -d
+                                  sudo docker exec sfia2_frontend_1 pytest --cov application 
+                                  sudo docker exec sfia2_backend_1 pytest --cov application
+                                  sudo docker exec sfia2_frontend_1 pytest --cov application > test_frontend.txt
+                                  sudo docker exec sfia2_backend_1 pytest --cov application > test_backend.txt
+                                  exit
                                  '''
 
                  
