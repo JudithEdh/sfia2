@@ -29,6 +29,7 @@ pipeline{
             }
             stage('Test'){
                 steps{
+                       sshagent(['ubuntu']) {
                          withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                           string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
                                           file(credentialsId: 'key', variable: 'key'),
@@ -50,7 +51,7 @@ pipeline{
                                  '''
 
                  
-                          
+                         }
                         }
                 }
             }
