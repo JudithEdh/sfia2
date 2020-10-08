@@ -20,7 +20,8 @@ pipeline{
                     script{
                         if (env.rollback == 'false'){
                             docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
-                                image.push("${env.app_version}")
+                                imagef.push("${env.app_version}")
+                                imageb.push("${env.app_version}")
                             }
                         }
                     }
@@ -34,20 +35,9 @@ pipeline{
                                           string(credentialsId: 'TEST_DATABASE_URI', variable: 'TEST_DATABASE_URI')]) {
                                 sh '''
                                  ssh -o StrictHostKeyChecking=no -tt ubuntu@35.177.140.168 << EOF 
-                                 
-                                 rm -rf ~/sfia2 
-                                 if [ -d ~/sfia2 ]
-                                  then
-                                        rm -rf sfia2
-                                  fi
-                                  git clone -b image https://github.com/JudithEdh/sfia2  
-                                  pwd
-                                  cd sfia2
-                                  git pull
-                                  pwd
-                                  sudo docker-compose down --rmi all
-                                  sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI docker-compose pull && docker-compose up -d
-                                  exit
+                                 sudo docker-compose down --rmi all
+                                 sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI docker-compose pull && docker-compose up -d
+                                 exit
                                   '''  
 
                  
