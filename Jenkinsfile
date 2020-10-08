@@ -42,7 +42,8 @@ pipeline{
                                   cd sfia2
                                   git pull
                                   docker login --username judithed --password $hub_password
-                                  sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI app_version=$app_version docker-compose pull 
+                                  sudo docker pull judithed/sfia2-frontend:$app_version
+                                  sudo docker pull judithed/sfia2-backend:$app_version
                                   sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI app_version=$app_version docker-compose up -d 
                                   
                                   sudo docker exec sfia2_frontend_1 pytest --cov application 
