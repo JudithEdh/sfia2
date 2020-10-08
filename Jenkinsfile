@@ -33,12 +33,11 @@ pipeline{
                          withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                           string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
                                           string(credentialsId: 'TEST_DATABASE_URI', variable: 'TEST_DATABASE_URI')]) {
-                                sh '''
-                                 ssh -o StrictHostKeyChecking=no -tt ubuntu@35.177.140.168 << EOF 
-                                 sudo docker-compose down --rmi all
-                                 sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI docker-compose pull && docker-compose up -d
-                                 exit
-                                  '''  
+                                 
+                                 
+                                 sh '''
+                                 DOCKER_HOST="ssh://-o StrictHostKeyChecking=no -tt ubuntu@35.177.140.168" -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI docker-compose pull && docker-compose up -d
+                                 '''
 
                  
                           }
