@@ -11,12 +11,10 @@ pipeline{
                         git clone -b image https://github.com/JudithEdh/sfia2  
                         pwd
                         cd sfia2
-                        cd frontend
+                        pwd
                         if (env.rollback == 'false'){
-                            imagef = docker.build("judithed/sfia2-frontend")
-                            cd ..
-                            cd backend
-                            imageb = docker.build("judithed/sfia2-backend")
+                            imagef = docker.build("judithed/sfia2-frontend", "./frontend")
+                            imageb = docker.build("judithed/sfia2-backend", "./backend")
                         }
                     }
                 }
