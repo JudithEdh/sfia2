@@ -36,7 +36,7 @@ pipeline{
                                  
                                  
                                  sh '''
-                                 DOCKER_HOST="ssh://-o StrictHostKeyChecking=no -tt ubuntu@35.177.140.168" -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI docker-compose pull && docker-compose up -d
+                                 DOCKER_HOST="ssh://-o StrictHostKeyChecking=no -tt ubuntu@35.177.140.168" docker-compose pull && docker-compose up -d
                                  '''
 
                  
