@@ -36,7 +36,7 @@ pipeline{
                                  
                                  
                                  sh '''
-                                 DOCKER_HOST="ssh://-o StrictHostKeyChecking=no -tt -i key ubuntu@35.177.140.168" docker-compose pull && docker-compose up -d
+                                 DOCKER_HOST="ssh://ubuntu@35.177.140.168" docker-compose pull && docker-compose up -d
                                  '''
 
                  
