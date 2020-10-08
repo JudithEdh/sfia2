@@ -9,8 +9,8 @@ pipeline{
                 steps{
                     script{
                         if (env.rollback == 'false'){
-                            imagef = docker.build("[your-dockerhub-username]/sfia2-frontend")
-                            imageb = docker.build("[your-dockerhub-username]/sfia2-backend")
+                            imagef = docker.build("judithed/sfia2-frontend")
+                            imageb = docker.build("judithed/sfia2-backend")
                         }
                     }
                 }
