@@ -8,10 +8,6 @@ pipeline{
             stage('Build Images'){
                 steps{
                     script{
-                        git clone -b image https://github.com/JudithEdh/sfia2  
-                        pwd
-                        cd sfia2
-                        pwd
                         if (env.rollback == 'false'){
                             imagef = docker.build("judithed/sfia2-frontend", "./frontend")
                             imageb = docker.build("judithed/sfia2-backend", "./backend")
