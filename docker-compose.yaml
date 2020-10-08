@@ -1,12 +1,12 @@
 version: '3.7'
 services:
   frontend:
-    image: frontend
+    image: judithed/sfia2-frontend:${app_version}
     build: ./frontend
     depends_on:
-      - backend
+      - sfia2-backend
   backend:
-    image: backend
+    image: judithed/sfia2-backend:${app_version}
     build: ./backend
     environment:
       - SECRET_KEY=${DB_PASSWORD}
@@ -24,6 +24,6 @@ services:
       source: ./nginx/nginx.conf
       target: /etc/nginx/nginx.conf
     depends_on:
-      - frontend
+      - sfia2-frontend
 
 
