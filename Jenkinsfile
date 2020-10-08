@@ -1,7 +1,7 @@
 pipeline{
         agent any
          environment {
-            app_version = 'v1'
+            app_version = 'try1'
             rollback = 'false'
         }
         stages{
@@ -32,6 +32,7 @@ pipeline{
                        sshagent(['ubuntu']) {
                          withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                           string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
+                                          string(credentialsId: 'hub_password', variable: 'hub_password'),
                                           file(credentialsId: 'key', variable: 'key'),
                                           string(credentialsId: 'TEST_DATABASE_URI', variable: 'TEST_DATABASE_URI')]) {
                                  
@@ -40,7 +41,7 @@ pipeline{
                                   ssh -o StrictHostKeyChecking=no -tt ubuntu@35.177.140.168 << EOF 
                                   cd sfia2
                                   git pull
-                                  pwd
+                                  docker login --username judithed --password $hub_password
                                   sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI app_version=$app_version docker-compose pull 
                                   sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI app_version=$app_version docker-compose up -d 
                                   
