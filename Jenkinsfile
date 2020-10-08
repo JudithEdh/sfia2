@@ -8,11 +8,6 @@ pipeline{
             stage('Build Images'){
                 steps{
                     script{
-                        rm -rf ~/sfia2 
-                        if [ -d ~/sfia2 ]
-                        then
-                          rm -rf sfia2
-                        fi
                         git clone -b image https://github.com/JudithEdh/sfia2  
                         pwd
                         cd sfia2
