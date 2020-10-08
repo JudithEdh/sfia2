@@ -32,11 +32,12 @@ pipeline{
                         sshagent(['ubuntu']) {
                          withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                           string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
+                                          file(credentialsId: 'key', variable: 'key'),
                                           string(credentialsId: 'TEST_DATABASE_URI', variable: 'TEST_DATABASE_URI')]) {
                                  
                                  
                                  sh '''
-                                 DOCKER_HOST="ssh://-o StrictHostKeyChecking=no -tt ubuntu@35.177.140.168" docker-compose pull && docker-compose up -d
+                                 DOCKER_HOST="ssh://-o StrictHostKeyChecking=no -tt -i key ubuntu@35.177.140.168" docker-compose pull && docker-compose up -d
                                  '''
 
                  
