@@ -1,7 +1,32 @@
 pipeline{
         agent any
+         environment {
+            app_version = 'v1'
+            rollback = 'false'
+        }
         stages{
-            stage('Run & Test'){
+            stage('Build Images'){
+                steps{
+                    script{
+                        if (env.rollback == 'false'){
+                            imagef = docker.build("[your-dockerhub-username]/sfia2-frontend")
+                            imageb = docker.build("[your-dockerhub-username]/sfia2-backend")
+                        }
+                    }
+                }
+            }
+            stage('Tag & Push Image'){
+                steps{
+                    script{
+                        if (env.rollback == 'false'){
+                            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
+                                image.push("${env.app_version}")
+                            }
+                        }
+                    }
+                }
+            }
+            stage('Test'){
                 steps{
                         sshagent(['ubuntu']) {
                          withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
@@ -15,17 +40,13 @@ pipeline{
                                   then
                                         rm -rf sfia2
                                   fi
-                                  git clone -b ssh https://github.com/JudithEdh/sfia2  
+                                  git clone -b image https://github.com/JudithEdh/sfia2  
                                   pwd
                                   cd sfia2
                                   git pull
                                   pwd
                                   sudo docker-compose down --rmi all
-                                  sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI docker-compose up -d --build
-                                  sudo docker exec sfia2_frontend_1 pytest --cov application 
-                                  sudo docker exec sfia2_backend_1 pytest --cov application
-                                  sudo docker exec sfia2_frontend_1 pytest --cov application > test_frontend.txt
-                                  sudo docker exec sfia2_backend_1 pytest --cov application > test_backend.txt
+                                  sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI docker-compose pull && docker-compose up -d
                                   exit
                                   '''  
 
