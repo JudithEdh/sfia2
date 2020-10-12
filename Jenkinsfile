@@ -78,6 +78,8 @@ pipeline{
                                  
                                sh '''
                                  ssh -o StrictHostKeyChecking=no -tt jenkins@35.246.46.217 <<EOF
+                                 rm -rf sfia2
+                                 git clone https://github.com/JudithEdh/sfia2
                                  cd sfia2
                                  git pull
                                  kubectl create secret generic test-secret --from-literal=SECRET_KEY=$SECRET_KEY --from-literal=DATABASE_URI=$DATABASE_URI --from-literal=TEST_DATABASE_URI=$TEST_DATABASE_URI --from-literal=MYSQL_ROOT_PASSWORD=$DB_PASSWORD --from-literal=DB_PASSWORD=$DB_PASSWORD
