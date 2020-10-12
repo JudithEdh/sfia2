@@ -24,3 +24,16 @@ The requirements are listed below:
 - Reverse Proxy: NGINX
 - Orchestration Tool: Kubernetes
 - Infrastructure Management: Terraform
+## MOSCOW approach
+
+The MOSCOW approach was followed to make sure that the essential features of the app were prioritised and to ensure the creation of a fully functional product that meets all the requirements.
+- #### Must Have
+1. Jenkins must be configured on a virtual machine through Ansible
+2. The 2 databases (for testing and deployment) and the vm where Jenkins is running must be created through Terraform
+3. The testing of the application must be performed every time a change is made on the code
+4. The app must be deployen on Kubernetes
+5. NGINX must be used to reverse proxy
+- #### Should Have
+1. Ability to roll back to a previous version of the application
+- ### Wont have
+1. Ability to set up all the tools needed (including a pipeline) with a few simple commands
