@@ -33,7 +33,6 @@ pipeline{
                          withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
                                           string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
                                           string(credentialsId: 'hub_password', variable: 'hub_password'),
-                                          file(credentialsId: 'key', variable: 'key'),
                                           string(credentialsId: 'TEST_DATABASE_URI', variable: 'TEST_DATABASE_URI')]) {
                                  
                                  
