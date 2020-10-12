@@ -79,8 +79,13 @@ pipeline{
                                  cd sfia2
                                  git pull
                                  kubectl create secret generic test-secret --from-literal=SECRET_KEY=$SECRET_KEY --from-literal=DATABASE_URI=$DATABASE_URI --from-literal=TEST_DATABASE_URI=$TEST_DATABASE_URI --from-literal=MYSQL_ROOT_PASSWORD=$DB_PASSWORD --from-literal=DB_PASSWORD=$DB_PASSWORD
+                                 docker login --username judithed --password $hub_password
                                  sudo docker pull judithed/sfia2-frontend:$app_version
                                  sudo docker pull judithed/sfia2-backend:$app_version
+                                 cd kubernetes
+                                 sed -i s+judithed/sfia2-frontend:version+judithed/sfia2-frontend:$app_version+g frontend.yml
+                                 sed -i s+judithed/sfia2-backend:version+judithed/sfia2-backend:$app_version+g backend.yml
+                                 cd ..
                                  kubectl apply -f kubernetes/
                                  kubectl get svc
                                  
