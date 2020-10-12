@@ -76,9 +76,14 @@ pipeline{
                                  
                                sh '''
                                  ssh -o StrictHostKeyChecking=no -tt jenkins@35.246.46.217 <<EOF
-                                 ls -al ~/
-                                 pwd
-                                 gcloud container clusters list
+                                 cd sfia2
+                                 git pull
+                                 kubectl create secret generic test-secret --from-literal=SECRET_KEY=$SECRET_KEY --from-literal=DATABASE_URI=$DATABASE_URI --from-literal=TEST_DATABASE_URI=$TEST_DATABASE_URI --from-literal=MYSQL_ROOT_PASSWORD=$DB_PASSWORD --from-literal=DB_PASSWORD=$DB_PASSWORD
+                                 sudo docker pull judithed/sfia2-frontend:$app_version
+                                 sudo docker pull judithed/sfia2-backend:$app_version
+                                 kubectl apply -f kubernetes/
+                                 kubectl get svc
+                                 
                                  exit
                                  '''
 
