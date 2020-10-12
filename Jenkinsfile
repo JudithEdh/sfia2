@@ -2,7 +2,7 @@ pipeline{
         agent any
          environment {
             app_version = 'v1'
-            rollback = 'true'
+            rollback = 'false'
         }
         stages{
             stage('Build Images'){
@@ -40,7 +40,7 @@ pipeline{
                                  sh '''
                                   ssh -o StrictHostKeyChecking=no -tt ubuntu@52.31.158.32 << EOF 
                                   cd sfia2
-                                  git pull
+                                  git pull origin development
                                   docker login --username judithed --password $hub_password
                                   sudo docker-compose down sudo docker-compose down --rmi all
                                   sudo docker pull judithed/sfia2-frontend:$app_version
@@ -52,6 +52,7 @@ pipeline{
                                   sudo docker exec sfia2_backend_1 pytest --cov application
                                   sudo docker exec sfia2_frontend_1 pytest --cov application > test_frontend.txt
                                   sudo docker exec sfia2_backend_1 pytest --cov application > test_backend.txt
+                                  
                                   exit
                                  '''
 
