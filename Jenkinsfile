@@ -53,6 +53,10 @@ pipeline{
                                   sudo docker exec sfia2_frontend_1 pytest --cov application > test_frontend.txt
                                   sudo docker exec sfia2_backend_1 pytest --cov application > test_backend.txt
                                   
+                                  git add .
+                                  git commit -am "app version $app_version"
+                                  git push
+
                                   exit
                                  '''
 
