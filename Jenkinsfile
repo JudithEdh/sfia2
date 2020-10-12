@@ -65,7 +65,27 @@ pipeline{
                         }
                 }
             }
-                
-                
+         
+            stage('Deploy'){
+                steps{
+                         withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
+                                          string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
+                                          string(credentialsId: 'hub_password', variable: 'hub_password'),
+                                          string(credentialsId: 'TEST_DATABASE_URI', variable: 'TEST_DATABASE_URI')]) {
+                                 
+                                 
+                               sh '''
+                                 ssh -o StrictHostKeyChecking=no -tt jenkins@35.246.46.217 <<EOF
+                                 ls -al ~/
+                                 pwd
+                                 gcloud container clusters list
+                                 exit
+                                 '''
+
+                 
+                         
+                        }
+                }
+            }    
           }
         }
