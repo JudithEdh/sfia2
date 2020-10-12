@@ -1,0 +1,51 @@
+  default.conf: |
+    server {
+        listen 80;
+        index index.html;
+        include /etc/nginx/mime.types;
+        location / {
+            proxy_pass http://frontend:5000;
+                proxy_set_header X-Forwarded-Host $host:$server_port;
+                proxy_set_header X-Forwarded-Server $host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    app: frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  volumes:
+  - name: nginx-configs
+    configMap:
+      name: nginx-config
+  containers:
+  - name: nginx
+    image: nginx:alpine
+    ports:
+      - containerPort: 80
+    volumeMounts:
+    - name: nginx-configs
+      mountPath: /etc/nginx/conf.d
+  - name: frontend
+    image: judithed/sfia2-frontend:v1
+    ports:
+    - containerPort: 5000
