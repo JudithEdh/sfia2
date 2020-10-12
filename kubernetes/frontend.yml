@@ -51,6 +51,6 @@ spec:
     - name: nginx-configs
       mountPath: /etc/nginx/conf.d
   - name: frontend
-    image: judithed/sfia2-frontend:v2
+    image: judithed/sfia2-frontend:version
     ports:
     - containerPort: 5000

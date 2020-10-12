@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: judithed/sfia2-backend:v2
+        image: judithed/sfia2-backend:version
         envFrom:
         - secretRef:
             name: test-secret
