@@ -1,64 +1,66 @@
 pipeline{
         agent any
+         environment {
+            app_version = 'v1'
+            rollback = 'true'
+        }
         stages{
-            stage('Make Directory'){
+            stage('Build Images'){
                 steps{
-                  sh '''
-                  #! /bin/bash
-                  DIRECTORY=~/web-app  
-                  rm -rf DIRECTORY
-                  if [ -d ~/web-app ]
-                  then
-                      rm -rf $DIRECTORY
-                  else 
-                    mkdir $DIRECTORY
-                    cd $DIRECTORY
-                  fi          
-                  '''
-                }
-            }        
-            stage('Clone Repo if it does not exist'){
-                steps{
-                  sh '''
-                  DIRECTORY=~/jenkins-pipeline-exercise  
-                  FILE=/home/jenkins/.jenkins/workspace/web-app/sfia2
-                  sudo apt-get install git                
-                  if [ -d "$FILE" ]
-                  then
-                    echo exists
-                  else 
-                    git clone -b practice https://github.com/JudithEdh/sfia2  
-                  fi 
-                  cd $FILE
-                  git pull
-                  '''
+                    script{
+                        if (env.rollback == 'false'){
+                            imagef = docker.build("judithed/sfia2-frontend", "./frontend")
+                            imageb = docker.build("judithed/sfia2-backend", "./backend")
+                        }
+                    }
                 }
             }
-            stage('Install Docker and Docker-Compose'){
+            stage('Tag & Push Image'){
                 steps{
-                  sh '''
-                  sudo apt update
-                  curl https://get.docker.com | sudo bash
-                  sudo usermod -aG docker $(whoami)
-                  sudo apt install -y curl jq
-                  version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
-                  sudo curl -L "https://github.com/docker/compose/releases/download/${version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                  sudo chmod +x /usr/local/bin/docker-compose
-                  '''
-                }
-              }
-            stage('Deploy the application'){
-                steps{
-                  sh ''' 
-                  pwd
-                  export SECRET_KEY
-                  export DATABASE_URI
-                  export DB_PASSWORD
-                  export MYSQL_ROOT_PASSWORD
-                  sudo -E MYSQL_ROOT_PASSWORD=${DB_PASSWORD} DB_PASSWORD=${DB_PASSWORD} DATABASE_URI=${DATABASE_URI} SECRET_KEY=${SECRET_KEY} docker-compose pull && sudo -E MYSQL_ROOT_PASSWORD=${DB_PASSWORD} DB_PASSWORD=${DB_PASSWORD} DATABASE_URI=${DATABASE_URI} SECRET_KEY=${SECRET_KEY} docker-compose up -d --build
-                  sudo docker-compose logs
-                  '''  
+                    script{
+                        if (env.rollback == 'false'){
+                            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
+                                imagef.push("${env.app_version}")
+                                imageb.push("${env.app_version}")
+                            }
+                        }
+                    }
                 }
             }
-        }    
-}
+            stage('Test'){
+                steps{
+                       sshagent(['ubuntu']) {
+                         withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'), 
+                                          string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
+                                          string(credentialsId: 'hub_password', variable: 'hub_password'),
+                                          file(credentialsId: 'key', variable: 'key'),
+                                          string(credentialsId: 'TEST_DATABASE_URI', variable: 'TEST_DATABASE_URI')]) {
+                                 
+                                 
+                                 sh '''
+                                  ssh -o StrictHostKeyChecking=no -tt ubuntu@35.177.140.168 << EOF 
+                                  cd sfia2
+                                  git pull
+                                  docker login --username judithed --password $hub_password
+                                  sudo docker-compose down sudo docker-compose down --rmi all
+                                  sudo docker pull judithed/sfia2-frontend:$app_version
+                                  sudo docker pull judithed/sfia2-backend:$app_version
+                                  
+                                  sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY TEST_DATABASE_URI=$TEST_DATABASE_URI app_version=$app_version docker-compose up -d 
+                                  
+                                  sudo docker exec sfia2_frontend_1 pytest --cov application 
+                                  sudo docker exec sfia2_backend_1 pytest --cov application
+                                  sudo docker exec sfia2_frontend_1 pytest --cov application > test_frontend.txt
+                                  sudo docker exec sfia2_backend_1 pytest --cov application > test_backend.txt
+                                  exit
+                                 '''
+
+                 
+                         }
+                        }
+                }
+            }
+                
+                
+          }
+        }

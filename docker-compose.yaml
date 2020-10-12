@@ -1,26 +1,19 @@
 version: '3.7'
 services:
-  mysql:
-    image: users
-    build: ./database
-    environment:
-      - SECRET_KEY=${DB_PASSWORD}
-      - DATABASE_URI=${DATABASE_URI}
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
   frontend:
-    image: frontend
-    build: ./frontend
+    image: judithed/sfia2-frontend:${app_version}
+    build: .
     depends_on:
       - backend
   backend:
-    image: backend
-    build: ./backend
+    image: judithed/sfia2-backend:${app_version}
+    build: .
     environment:
       - SECRET_KEY=${DB_PASSWORD}
       - DATABASE_URI=${DATABASE_URI}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-    depends_on:
-      - mysql
+      - TEST_DATABASE_URI=${TEST_DATABASE_URI}
+      - DB_PASSWORD=${DB_PASSWORD}
   nginx:
     image: nginx
     ports:
@@ -32,5 +25,3 @@ services:
       target: /etc/nginx/nginx.conf
     depends_on:
       - frontend
-
-
