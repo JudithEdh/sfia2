@@ -42,6 +42,8 @@ pipeline{
                                   git pull origin development
                                   docker login --username judithed --password $hub_password
                                   sudo docker-compose down sudo docker-compose down --rmi all
+                                  sudo docker rmi judithed/sfia2-backend:$app_version
+                                  sudo docker rmi judithed/sfia2-frontend:$app_version
                                   sudo docker pull judithed/sfia2-frontend:$app_version
                                   sudo docker pull judithed/sfia2-backend:$app_version
                                   
