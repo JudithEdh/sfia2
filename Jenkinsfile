@@ -38,7 +38,7 @@ pipeline{
                                  
                                  
                                  sh '''
-                                  ssh -o StrictHostKeyChecking=no -tt ubuntu@35.177.140.168 << EOF 
+                                  ssh -o StrictHostKeyChecking=no -tt ubuntu@52.31.158.32 << EOF 
                                   cd sfia2
                                   git pull
                                   docker login --username judithed --password $hub_password
