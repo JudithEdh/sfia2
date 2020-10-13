@@ -1,4 +1,4 @@
-apiVersion: number
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-config
@@ -18,7 +18,7 @@ data:
         }
     }
 ---
-apiVersion: number
+apiVersion: v1
 kind: Service
 metadata:
   name: nginx
@@ -31,7 +31,7 @@ spec:
     targetPort: 80
   type: LoadBalancer
 ---
-apiVersion: number
+apiVersion: v1
 kind: Pod
 metadata:
   name: frontend
