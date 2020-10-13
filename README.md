@@ -6,7 +6,7 @@ The purpose of the project was to deploy a given application through a continuou
 - [Recipes Collection](#recipes-collection)
 - [MOSCOW approach](#moscow-approach)
 - [Planning](#planning)
-- [Docker and docker compose](#docker-and docker-compose)
+- [Docker and docker compose](#docker-and-docker-compose)
 - [Risk assessment](#risk-assessment)
 - [Jenkins pipeline](#jenkins-pipeline)
 - [Ansible](#ansible)
