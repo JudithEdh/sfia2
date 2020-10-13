@@ -89,6 +89,8 @@ pipeline{
                                  cd kubernetes
                                  sed -i s+judithed/sfia2-frontend:version+judithed/sfia2-frontend:$app_version+g frontend.yml
                                  sed -i s+judithed/sfia2-backend:version+judithed/sfia2-backend:$app_version+g backend.yml
+                                 sed -i s+judithed/number+judithed/$app_version+g frontend.yml
+                                 sed -i s+judithed/number+judithed/$app_version+g backend.yml
                                  cd ..
                                  kubectl apply -f kubernetes/
                                  kubectl get svc
