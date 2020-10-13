@@ -1,8 +1,8 @@
 pipeline{
         agent any
          environment {
-            app_version = 'original'
-            rollback = 'true'
+            app_version = 'v0'
+            rollback = 'false'
         }
         stages{
             stage('Build Images'){
@@ -89,8 +89,8 @@ pipeline{
                                  cd kubernetes
                                  sed -i s+judithed/sfia2-frontend:version+judithed/sfia2-frontend:$app_version+g frontend.yml
                                  sed -i s+judithed/sfia2-backend:version+judithed/sfia2-backend:$app_version+g backend.yml
-                                 sed -i s+judithed/number+judithed/$app_version+g frontend.yml
-                                 sed -i s+judithed/number+judithed/$app_version+g backend.yml
+                                 sed -i s+number+$app_version+g frontend.yml
+                                 sed -i s+number+$app_version+g backend.yml
                                  cd ..
                                  kubectl apply -f kubernetes/
                                  kubectl get svc
