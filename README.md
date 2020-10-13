@@ -1,105 +1,39 @@
 # QAC SFIA2 Project
+## Introduction
+The purpose of the project was to deploy a given application through a continuous integration pipeline using all the concepts and skills aquired in the second part of the training in QA academy ([Cloud Native - Practical Project Specification](https://portal.qa-community.co.uk/~/cne/projects/practical--cn)). 
+## Table of Contents
+- [Requirements](#requirements)
+- [Recipes Collection](#recipes-collection)
+- [MOSCOW approach](#moscow-approach)
+- [Database](#database)
+- [CI Pipeline](#ci-pipeline)
+- [Planning](#planning)
+- [Risk assessment](#risk-assessment)
+- [Project components](#project-components)
+- [Future work and reflection on the project](#future-work-and-reflection-on-the-project)
+- [Summary](#summary)
+## Requirements
+The requirements are listed below:
+- Kanban Board: Jira 
+- Version Control: Git
+- CI Server: Jenkins
+- Configuration Management: Ansible
+- Cloud Server: AWS EC2
+- Database Server: AWS RDS
+- Containerisation: Docker
+- Reverse Proxy: NGINX
+- Orchestration Tool: Kubernetes
+- Infrastructure Management: Terraform
+## MOSCOW approach
 
-This application is a simple [Flask application](https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application), ready to be deployed, for your SFIA2 project.
-
-The following information should be everything you need to complete the project.
-
-## Brief
-
-The application must:
-
-- Be deployed to a **Virtual Machine for testing**
-- Be deployed in a **managed Kubernetes Cluster for production**
-- Make use of a **managed Database solution**
-
-## Application
-
-The application is a Flask application running in **2 micro-services** (*frontend* and *backend*).  
-
-The database directory is available should you: 
-  - want to use a MySQL container for your database at any point, *or*
-  - want to make use of the `Create.sql` file to **set up and pre-populate your database**.
-
-The application works by:
-1. The frontend service making a GET request to the backend service. 
-2. The backend service using a database connection to query the database and return a result.
-3. The frontend service serving up a simple HTML (`index.html`) to display the result.
-
-### Database Connection
-
-The database connection is handled in the `./backend/application/__init__.py` file.
-
-A typical Database URI follows the form:
-
-```
-mysql+pymysql://[db-user]:[db-password]@[db-host]/[db-name]
-```
-
-An example of this would be:
-
-```
-mysql+pymysql://root:password@mysql:3306/orders
-```
-
-### Environment Variables
-
-The application makes use of **2 environment variables**:
-
-- `DATABASE_URI`: as described above
-- `SECRET_KEY`: any *random string* will work here
-
-### Running a Flask Application
-
-Typically, to run a Flask application, you would:
-
-1. Install the pip dependencies:
-
-```
-pip install -r requirements.txt
-```
-
-2. Run the application:
-
-```
-python3 app.py
-```
-
-![app-diagram](https://i.imgur.com/wnbDazy.png)
-
-## Testing
-
-Unit Tests have been included for both the frontend and backend services.
-
-To test the backend service, you will need two things:
-
-1. A database called `testdb`
-2. A `TEST_DATABASE_URI` environment variable, which contains the database connection for the `testdb` database.
-
-You can run the tests using the command:
-
-```
-pytest
-```
-
-To generate a coverage report, you will need to run:
-
-```
-pytest --cov application
-```
-
-## Infrastructure
-
-The **Minimum Viable Product** for this project should at least demonstrate the following infrastructure diagram:
-
-![mvp-diagram](https://i.imgur.com/i5qfOas.png)
-
-**Stretch goals** for this project include:
-
-- Using **Terraform to configure the Kubernetes Cluster** for production 
-- Using **Terraform and Ansible to configure the Test VM**
-
-Completing the stretch goals should yield an infrastructure diagram similar to the following:
-
-![stretch-digram](https://i.imgur.com/Q5zljVl.png)
-
-**Good luck!**
+The MOSCOW approach was followed to make sure that the essential features of the app were prioritised and to ensure the creation of a fully functional product that meets all the requirements.
+- #### Must Have
+1. Jenkins must be configured on a virtual machine through Ansible
+2. The 2 databases (for testing and deployment) and the vm where Jenkins is running must be created through Terraform
+3. The testing of the application must be performed every time a change is made on the code
+4. The app must be deployen on Kubernetes
+5. NGINX must be used to reverse proxy
+- #### Should Have
+1. Ability to roll back to a previous version of the application
+- ### Wont have
+1. Ability to set up all the tools needed (including a pipeline) with a few simple commands
