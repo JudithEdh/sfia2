@@ -3,7 +3,6 @@
 The purpose of the project was to deploy a given application through a continuous integration pipeline using all the concepts and skills acquired in the second part of the training in QA academy 
 ## Table of Contents
 - [Requirements](#requirements)
-- [Recipes Collection](#recipes-collection)
 - [MOSCOW approach](#moscow-approach)
 - [Planning](#planning)
 - [Docker and docker compose](#docker-and-docker-compose)
