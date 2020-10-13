@@ -3,7 +3,6 @@
 The purpose of the project was to deploy a given application through a continuous integration pipeline using all the concepts and skills acquired in the second part of the training in QA academy 
 ## Table of Contents
 - [Requirements](#requirements)
-- [Recipes Collection](#recipes-collection)
 - [MOSCOW approach](#moscow-approach)
 - [Planning](#planning)
 - [Docker and docker compose](#docker-and-docker-compose)
@@ -54,15 +53,15 @@ Next, the plan was to run the application through a jenkins pipeline.
 The following sprint ensured that the virtual machines and the databases instances were Amazon Web Services.
 The next steps were to automate the creation and configuration of the instances used through Terraform and Ansible.
 And finally, the application was configured to run on a kubernetes cluster.
+## Risk assessment
+
+![Imgur](https://i.imgur.com/WyAFLyb.png)
 ## Docker and docker-compose
 The first step to deploy the application, was to containerise the application. This means that as long as docker and docker-compose are installed in a machine, the app will be able to run.
 To do so, the dockerfiles for the frontend and the backend of the app were created as well as a Docker Compose file to take care of all the services needed. 
 Initially, a container was utilised for the database for testing purposes as shown in the following image.
 
 ![database-docker](https://i.imgur.com/GrRxU1n.png)
-## Risk assessment
-
-![Imgur](https://i.imgur.com/WyAFLyb.png)
 
 ## Jenkins pipeline
 Jenkins is a powerful tool used in CI/CD pipelines. In other words, it allows the developer to set a number of tasks needed to deploy an application. In this specific case, the stages of the pipeline are: declarative checkout SCM, build images, tag & push image, test and deploy.
