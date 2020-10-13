@@ -11,7 +11,7 @@ spec:
     targetPort: 5001
   type: ClusterIP
 ---
-apiVersion: apps/v1
+apiVersion: apps/number
 kind: Deployment
 metadata:
   name: backend
