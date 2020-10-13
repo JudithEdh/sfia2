@@ -1,4 +1,4 @@
-apiVersion: number
+apiVersion: v1
 kind: Service
 metadata:
   name: backend
@@ -11,7 +11,7 @@ spec:
     targetPort: 5001
   type: ClusterIP
 ---
-apiVersion: apps/number
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
