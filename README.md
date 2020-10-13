@@ -116,4 +116,3 @@ Next, although the app is fully tested whenever a change is made, the applicatio
 The various stages of the development of the CI/CD pipeline of QA Cloud Native Practical Project were outlined, as well as the risks, the planning of the project and the potential future work.
 
 #### Author: Judith Edhogbo
-
